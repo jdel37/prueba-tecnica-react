@@ -1,36 +1,28 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
-const RANDOM_FACT_CAT_ENDPOINT='https://catfact.ninja/fact'
-const IMAGE_CAT_ENDPOINT=`https://cataas.com/cat/says/${firstWord}?fontSize=50&fontColor=red`
-function App() {
-  const [count, setCount] = useState(0)
+import { useCatImage } from './hooks/useCatImage.js'
+import { useCatFact } from './hooks/useCatFact.js'
+import { Otro } from './components/Otro.jsx'
+export function App () {
+  const { fact, refreshFact } = useCatFact()
+ 
+
+  const handleClick = async () => {
+    refreshFact()
+  }
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <main className="text-center p-6 max-w-md mx-auto bg-slate-400 rounded-lg">
+      <h1 className="text-2xl font-bold mb-4 text-gray-800">App de gatitos</h1>
+
+      <button onClick={handleClick} class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-pink-500 to-orange-400 group-hover:from-pink-500 group-hover:to-orange-400 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800">
+<span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+Change Fact
+</span>
+</button>
+
+      {fact && <p className='mb-3 text-lg text-gray-700 md:text-xl dark:text-gray-700'>{fact}</p>}
+   <Otro fact={fact}/>
+    </main>
   )
 }
-
 export default App
